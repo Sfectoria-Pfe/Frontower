@@ -7,9 +7,10 @@ import Navbar from 'react-bootstrap/Navbar';
 import { MDBBadge, MDBBtn } from 'mdb-react-ui-kit';
 import { HiMiniShoppingCart } from "react-icons/hi2";
 import OffCanvas from '../components/OffCanvas';
+import { useNavigate } from 'react-router-dom';
 export default function CustomNavBar(props) {
   const [show, setShow] = useState(false);
-
+  const navigate = useNavigate();
   const handleClose = () => {
     setShow(false)
   };
@@ -28,9 +29,9 @@ export default function CustomNavBar(props) {
               style={{ maxHeight: '100px' }}
               navbarScroll
             >
-              <Nav.Link href="#action1" onClick={() => props.newViewFromApp("home")}>Home</Nav.Link>
-              <Nav.Link href="#action2" onClick={() => props.newViewFromApp("about")}>About</Nav.Link>
-              <Nav.Link href="#" onClick={() => props.newViewFromApp("contact")}>
+              <Nav.Link onClick={()=>navigate("/")}>Home</Nav.Link>
+              <Nav.Link  onClick={()=>navigate("/about")}>About</Nav.Link>
+              <Nav.Link onClick={()=>navigate("/contact")}>
                 Contact
               </Nav.Link>
             </Nav>

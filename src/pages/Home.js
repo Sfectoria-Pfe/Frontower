@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { Component, useContext, useEffect, useState } from 'react'
 import CustomCarousel from '../components/CustomCarousel'
 import axios from "axios"
 import Card from 'react-bootstrap/Card';
@@ -6,13 +6,15 @@ import Button from 'react-bootstrap/Button';
 import Placeholder from 'react-bootstrap/Placeholder';
 import CardImg from 'react-bootstrap/esm/CardImg';
 import { carouselImg } from '../constant/carouselImg';
+import CartContext from '../CartContext';
+
 
 export default function Home(props) {
   const [products, setProduct] = useState([]);
   const [loading, setLoading] = useState(false);
   const [carouselData, setCarouselData] = useState(carouselImg);
   const [update, setUpdate] = useState(false);
-
+const {cart,dispatch}=useContext(CartContext)
   const handleAddToCart = (produit) => {
     const existingProduct = props.cart.find(item => item.id === produit.id);
     if (existingProduct) {
@@ -32,12 +34,12 @@ export default function Home(props) {
       .catch((err) => { console.log(err) })
   }
   useEffect(() => {
-    const savedItem = localStorage.getItem("cart", JSON.parse(localStorage.getItem("cart")))
+    const savedItem = JSON.parse(localStorage.getItem("cart"))
     if(savedItem.length) {props.setCart(savedItem)}
   }, [])
   
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(props.cart))
+    if(props.cart.length)localStorage.setItem("cart", JSON.stringify(props.cart))
   }, [props.cart])
 
   const handleDelete = (id) => {
@@ -64,7 +66,7 @@ export default function Home(props) {
               </Card.Text>
               <h5>{elem.price}</h5>
               <Button variant="primary" onClick={() => handleAddToCart(elem)}>add to cart</Button>
-              <Button variant="danger" onClick={() => handleDelete(elem.id)}>Delete</Button>
+              <Button variant="danger"  onClick={()=>props.newViewFromApp("productDetails",elem)}>View more details</Button>
             </Card.Body>
           </Card>
         ))}

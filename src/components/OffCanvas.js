@@ -21,7 +21,7 @@ export default function OffCanvas({ show, handleClose, cart, setCart }) {
   
    // bech nlawej fi woset el card 3al produit eli ena clicite 3lihe wa9teli nal9ahe nzidou el quantity +1 sion nkhalihe kima howa
   const updateQuantity=(produit,newQuantity)=>{
-    const updated= cart.map(elem => elem.id === produit.id ? {...elem, quantity: newQuantity}: elem)
+    const updated= cart.map(elem => elem.id === produit.id ? {...elem, quantity: Math.max(newQuantity,0)}: elem)
     setCart(
      updated
     )
